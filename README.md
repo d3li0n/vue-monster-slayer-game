@@ -1,6 +1,6 @@
 # Monster Slayer
 
-Simple VueJS application coded with support of learninng resource - Udemy
+Simple VueJS application coded with support of learning resource - Udemy.
 
 ## Installation
 
