@@ -25,7 +25,7 @@ new Vue({
             var damage = this.calculateDamage(10, 20);
             this.monsterHealth -= damage;
 
-            this.log(3, 0);
+            this.log(3, damage);
 
             this.monsterAttack();
         },
@@ -51,7 +51,7 @@ new Vue({
             if(this.checkWin()) return;
             var damage = this.calculateDamage(5, 12);
             this.playerHealth -= damage;
-            this.checkWin();
+            if(this.checkWin()) return;
             this.log(2, damage);
         },
 
@@ -60,21 +60,21 @@ new Vue({
                 case 1: {
                     this.turns.unshift({
                         isPlayer: true,
-                        text: 'Player hits Monster for ' + damage,
+                        text: `Player hits Monster for ${damage}`,
                     });
                     break;
                 }
                 case 2: {
                     this.turns.unshift({
                         isPlayer: false,
-                        text: 'Monster hits Player for ' + damage,
+                        text: `Monster hits Player for ${damage}`,
                     });
                     break; 
                 }
                 case 3: { 
                     this.turns.unshift({
                         isPlayer: true,
-                        text: 'Player hits hard Monster for ' + damage,
+                        text: `Player hits hard Monster for ${damage}`,
                     });
                     break; 
                 }
@@ -89,13 +89,15 @@ new Vue({
         },  
 
         checkWin: function() {
-            if(this.monsterHealth <= 0){
-                if(confirm("You won! New Game?")) this.startGame();
-                else this.playGame = false;
-                return true;
-            } else if(this.playerHealth <= 0) {
-                if(confirm("You Lost! New Game?")) this.startGame();
-                else this.playGame = false;
+            if(this.monsterHealth <= 0 || this.playerHealth <= 0) {
+                if(this.monsterHealth <= 0) {
+                    if(confirm("You won! New Game?")) this.startGame();
+                    else this.playGame = false;
+                }
+                else {
+                    if(confirm("You Lost! New Game?")) this.startGame();
+                    else this.playGame = false;
+                }
                 return true;
             }
             return false;
